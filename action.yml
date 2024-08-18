@@ -25,16 +25,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - uses: actions/checkout@v4
 
-  - name: Prerequisites
+  - name: Installing pkup-gen
     shell: bash
     run: |
-      echo "Installing pkup-gen cli..."
-      curl "https://raw.githubusercontent.com/pPrecel/pkup-gen-action/main/scripts/install-pkup-gen.sh" | sh -
-
-      echo "Installing yq..."
-      curl "https://raw.githubusercontent.com/pPrecel/pkup-gen-action/main/scripts/install-yq.sh" | sh -
+      curl "https://raw.githubusercontent.com/pPrecel/pkup-gen-action/main/scripts/install-pkup-gen.sh" | sh 
 
   - name: Generate reports
     if: ${{ github.event.inputs.generate == 'true'  }}
