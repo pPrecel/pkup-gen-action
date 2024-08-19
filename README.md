@@ -18,13 +18,27 @@ Easy-to-use action allows generating PKUP reports and sending them zipped using 
 
 Action requires the `.pkupcompose.yaml` file located in the repository root directory and can be configured by passing additional (not required) inputs.
 
-### Inputs
+### Usage
 
-* `generate` (default: `treu`) - if true use the `.pkupcompose.yaml` file to generate reports
-* `create-tag` (default: `true`) - if true create branch and tag, named in format `<MONTH>.<YEAR>` with generated reports
-* `send-emails` (default: `true`) - if true send emails to reports owners described in the `.pkupcompose.yaml` file (under the `.reports[].email` fields)
-* `since` (default: 19th day of past month) - timestamp used to generate reports - foramt 02.01.2006
-* `until` (default: 18th day of actual month) - timestamp used to generate reports - foramt 02.01.2006
+```yaml
+- uses: pPrecel/pkup-gen-action@v1
+    with:
+      # if true use the `.pkupcompose.yaml` file to generate reports
+      # (default: `treu`)
+      generate: 'true'
+
+      # if true send emails to reports owners described in the `.pkupcompose.yaml` file (under the `.reports[].email` fields)
+      # (default: `true`)
+      send-emails: 'true'
+
+      # timestamp used to generate reports - foramt 02.01.2006
+      # (default: 19th day of past month)
+      since: "02.19.2024"
+      
+      # timestamp used to generate reports - foramt 02.01.2006
+      # (default: 18th day of actual month)
+      until: "03.18.2024"
+```
 
 ### .pkupcompose.yaml
 

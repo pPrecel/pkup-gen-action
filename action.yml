@@ -5,10 +5,6 @@ inputs:
     description: 'Generate reports'
     default: 'true'
     required: false
-  create-tag:
-    description: 'Create tag'
-    default: 'true'
-    required: false
   send-emails:
     description: 'Send emails'
     default: 'true'
@@ -43,23 +39,6 @@ runs:
       [ ! -z "${{ inputs.until }}" ] && ARGS="$ARGS --until ${{ inputs.until }}"
 
       bin/pkup compose ${ARGS}
-
-  - name: Create tag
-    if: ${{ inputs.create-tag == 'true'  }}
-    shell: bash
-    run: |
-      git config --local user.email "pkup-gen[bot]@pkup-gen.noreply.github.com"
-      git config --local user.name "pkup-gen[bot]"
-
-      git checkout -B $(date +"%m.%Y")
-
-      git add reports
-      git commit --allow-empty -m $(date +"%m.%Y")
-      git push
-
-      git tag -f $(date +"%m.%Y")
-
-      git push -f origin $(date +"%m.%Y")
   
   - name: Send emails
     if: ${{ inputs.send-emails == 'true' }}
