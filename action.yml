@@ -29,23 +29,23 @@ runs:
   - name: Installing pkup-gen
     shell: bash
     run: |
-      curl "https://raw.githubusercontent.com/pPrecel/pkup-gen-action/main/scripts/install-pkup-gen.sh" | sh 
+      curl "https://raw.githubusercontent.com/pPrecel/pkup-gen-action/main/scripts/install-pkup-gen.sh" | sh -
 
   - name: Generate reports
-    if: ${{ github.event.inputs.generate == 'true'  }}
+    if: ${{ inputs.generate == 'true'  }}
     shell: bash
     run: |
       rm -rf reports
 
       ARGS="--config .pkupcompose.yaml --ci"
 
-      [ ! -z "${{ github.event.inputs.since }}" ] && ARGS="$ARGS --since ${{ github.event.inputs.since }}"
-      [ ! -z "${{ github.event.inputs.until }}" ] && ARGS="$ARGS --until ${{ github.event.inputs.until }}"
+      [ ! -z "${{ inputs.since }}" ] && ARGS="$ARGS --since ${{ inputs.since }}"
+      [ ! -z "${{ inputs.until }}" ] && ARGS="$ARGS --until ${{ inputs.until }}"
 
       bin/pkup compose ${ARGS}
 
   - name: Create tag
-    if: ${{ github.event.inputs.create-tag == 'true'  }}
+    if: ${{ inputs.create-tag == 'true'  }}
     shell: bash
     run: |
       git config --local user.email "pkup-gen[bot]@pkup-gen.noreply.github.com"
@@ -62,12 +62,12 @@ runs:
       git push -f origin $(date +"%m.%Y")
   
   - name: Send emails
-    if: ${{ github.event.inputs.send-emails == 'true' }}
+    if: ${{ inputs.send-emails == 'true' }}
     shell: bash
     run: |
       ARGS="--config .pkupcompose.yaml"
 
-      [ ! -z "${{ github.event.inputs.until }}" ] && ARGS="$ARGS --timestamp ${{ github.event.inputs.until }}"
+      [ ! -z "${{ inputs.until }}" ] && ARGS="$ARGS --timestamp ${{ inputs.until }}"
 
       bin/pkup send ${ARGS}
   
