@@ -27,7 +27,8 @@ Action requires the `.pkupcompose.yaml` file located in the repository root dire
       # (default: `treu`)
       generate: 'true'
 
-      # if true send emails to reports owners described in the `.pkupcompose.yaml` file (under the `.reports[].email` fields)
+      # if true send emails to reports owners described in the `.pkupcompose.yaml` file 
+      # based on the `.reports[].email` fields
       # (default: `true`)
       send-emails: 'true'
 
